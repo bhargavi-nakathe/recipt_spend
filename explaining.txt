@@ -1,0 +1,22 @@
+GITIGNORE
+# Python: This is a comment.
+ It's just a label to make the file easier to read.
+ It means "the following rules are for files related to the Python programming language."
+
+__pycache__/: When you run a Python program, it creates a folder called __pycache__ to store temporary, pre-processed versions of your code to make it run faster next time.
+ This folder is automatically created and should be ignored.
+
+*.py[cod]: The asterisk * is a wildcard, meaning "any file name."
+ This line tells Git to ignore any file ending in .pyc, .pyo, or .pyd.
+ These are temporary compiled versions of Python code.
+
+*$py.class: Similar to above, this ignores a specific type of temporary file.
+
+*.so: Ignores "shared object" files, which are compiled code libraries (common in languages like C that are used with Python).
+
+The rest of the lines (build/, dist/, *.egg, etc.):
+ These are all folders and files that are created when you are packaging or distributing your Python code.
+ They are like the "shipping boxes" for your software—you don't need to store the boxes in your workshop, because you can always build new ones when you need to ship something.
+
+
+

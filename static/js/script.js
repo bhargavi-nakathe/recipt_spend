@@ -1,0 +1,1 @@
+// Main JavaScript for receipt spending tracker
