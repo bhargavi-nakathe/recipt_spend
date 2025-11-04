@@ -18,5 +18,178 @@ The rest of the lines (build/, dist/, *.egg, etc.):
  These are all folders and files that are created when you are packaging or distributing your Python code.
  They are like the "shipping boxes" for your software—you don't need to store the boxes in your workshop, because you can always build new ones when you need to ship something.
 
+REQURIMENTS
+🧠 Machine Learning & Classification
+    1. scikit-learn==1.3.0
+        Purpose: Machine learning model for expense classification
 
+        Why we need it:
+        Provides RandomForestClassifier for categorizing expenses
+        TfidfVectorizer converts text into numerical features
+        Model training, testing, and evaluation tools
+        Handles feature extraction and classification
+
+        Working in our project:
+        python
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.ensemble import RandomForestClassifier
+        # Converts text like "milk bread" into numerical features
+        vectorizer = TfidfVectorizer(max_features=500, stop_words='english')
+        # Classifies items into categories (food, groceries, etc.)
+        classifier = RandomForestClassifier(n_estimators=50)
+        # Training process:
+        # 1. Convert text → numbers using TF-IDF
+        # 2. Train Random Forest to recognize patterns
+        # 3. Predict new items based on learned patterns
+
+    2. joblib==1.3.2
+        Purpose: Save and load trained machine learning models
+        Why we need it:
+        Persist trained models to disk
+        Fast loading of pre-trained classifiers
+        Avoid retraining every time app starts
+        Working in our project:
+        python
+        import joblib
+        # Save trained model for future use
+        joblib.dump(model_data, 'models/trained_model.pkl')
+        # Load model when application starts
+        model = joblib.load('models/trained_model.pkl')
+        # No need to retrain - instantly ready for predictions
+
+📷 Image Processing & OCR
+    3. opencv-python==4.8.1.78
+        Purpose: Preprocess receipt images for better text recognition
+        Why we need it:
+        Image enhancement and cleanup
+        Noise reduction in receipt photos
+        Improve OCR accuracy by 40-60%
+        Working in our project:
+        python
+        import cv2
+        def preprocess_image(image_path):
+            img = cv2.imread(image_path)           # Read image
+            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
+            denoised = cv2.medianBlur(gray, 5)     # Remove noise
+            _, thresh = cv2.threshold(denoised, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)  # Enhance contrast
+            return thresh
+        # Before preprocessing: Blurry, noisy receipt
+        # After preprocessing: Clean, high-contrast text for OCR
+
+    4. pytesseract==0.3.10
+        Purpose: Optical Character Recognition - extract text from images
+
+        Why we need it:
+        Converts receipt images to readable text
+        Identifies items and prices from photos
+        Handles various fonts and layouts
+        Working in our project:
+        python
+        import pytesseract
+        def extract_text(processed_image):
+            # OCR configuration optimized for receipts
+            custom_config = r'--oem 3 --psm 6' 
+            # Extract text from preprocessed image
+            text = pytesseract.image_to_string(processed_image, config=custom_config)
+            return text
+        # Input: Receipt image → Output: "Milk $2.99\nBread $1.49\n..."
+
+    5. Pillow==10.0.1
+        Purpose: Image manipulation and handling
+        Why we need it:
+        Open and process various image formats
+        Handle image conversions
+        Work with different image types (JPEG, PNG, etc.)
+        Working in our project:
+        python
+        from PIL import Image
+        # Used internally by other libraries for image operations
+        # Ensures compatibility across different image formats
+
+🗄️ Data Handling & Processing
+    6. pandas==2.1.1
+        Purpose: Data manipulation and analysis
+        Why we need it:
+        Organize training data efficiently
+        Handle datasets for model training
+        Future analytics and reporting features
+        Working in our project:
+        python
+        import pandas as pd
+        # For organizing training data
+        training_data = [
+            ("milk bread eggs", "groceries"),
+            ("pizza restaurant", "food")
+        ]
+        df = pd.DataFrame(training_data, columns=['text', 'category'])
+        # Easy data manipulation for model training
+
+    7. numpy==1.24.3
+        Purpose: Numerical computations and array operations
+        Why we need it:
+        Fast mathematical operations
+        Handle numerical data from images and models
+        Required dependency for scikit-learn and OpenCV
+        Working in our project:
+        python
+        import numpy as np
+        # Used internally for:
+        # - Image data as numerical arrays
+        # - Mathematical operations in ML models
+        # - Efficient data processing
+
+🌐 Web Framework & Configuration
+    8. Flask==2.3.3
+        Purpose: Web application framework
+        Why we need it:
+        Create web interface for receipt upload
+        Handle HTTP requests and responses
+        Serve HTML templates and static files
+        REST API for frontend-backend communication
+        Working in our project:
+        python
+        from flask import Flask, request, jsonify, render_template
+        app = Flask(__name__)
+        @app.route('/')
+        def index():
+            return render_template('index.html')  # Serve web page
+        @app.route('/upload', methods=['POST'])
+        def upload_receipt():
+            file = request.files['receipt']  # Handle file upload
+            # Process receipt and return JSON response
+            return jsonify(results)
+
+    9. python-dotenv==1.0.0
+        Purpose: Environment configuration management
+        Why we need it:
+        Secure configuration management
+        Separate settings for development/production
+        Store sensitive data (API keys, secrets)
+        Working in our project:
+        python
+            from dotenv import load_dotenv
+            import os
+            load_dotenv()  # Load environment variables from .env file
+            class Config:
+                SECRET_KEY = os.getenv('SECRET_KEY', 'default-key')
+                # Safe configuration without hardcoding secrets
+🔄 Complete Data Flow with Libraries
+text
+User Uploads Receipt Image
+        ↓
+Flask (handles HTTP request)
+        ↓
+OpenCV (image preprocessing)
+        ↓
+Pytesseract (OCR text extraction)
+        ↓
+Custom Parser (extract items/prices)
+        ↓
+scikit-learn (classify each item)
+        ↓
+joblib (load pre-trained model)
+        ↓
+pandas/numpy (data handling)
+        ↓
+Flask (return JSON results to frontend)
 
