@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="upload-section">
+        <h2>Upload Receipt</h2>
+        <div class="upload-area" id="uploadArea">
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <div class="upload-placeholder">
+                <p>Click to select receipt image</p>
+                <p class="file-types">Supported: JPG, PNG, PDF</p>
+            </div>
+        </div>
+        <button id="processBtn" style="display: none;">Process Receipt</button>
+    </div>
+
+    <div class="results-section" id="resultsSection" style="display: none;">
+        <h3>Processing Results</h3>
+        <div id="resultsContent"></div>
+    </div>
+</div>
+{% endblock %}
