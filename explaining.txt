@@ -193,3 +193,26 @@ pandas/numpy (data handling)
         ↓
 Flask (return JSON results to frontend)
 
+SRC
+cv2 (OpenCV): For working with images (like editing photos)
+pytesseract: For reading text from images (OCR - Optical Character Recognition)
+re: For finding patterns in text (like finding prices)
+numpy: For working with numbers and arrays
+PIL: For handling images
+Config: A separate file containing settings
+try: starts error handling
+cv2.imread(image_path) loads the image from file path
+if img is None: checks if image loaded properly
+gray = ... converts color image to black & white
+denoised = ... removes noise (like removing grain from photo)
+thresh = ... makes image purely black and white (no gray) for better text reading
+custom_config tells the text reader how to process the image
+pytesseract.image_to_string() converts image text to actual text
+items = [] creates empty list to store found items
+lines = text.split('\n') breaks text into separate lines
+re.search() looks for price patterns in each line
+If found, float() converts text price to number (like "10.99" to 10.99)
+re.sub(pattern, '', line) removes price from line, leaving item name
+joblib: For saving/loading trained models
+classifier: The actual AI that learns categories
+is_trained: Tracks if model is trained
