@@ -119,4 +119,3 @@ class ExpenseTracker:
             })
         
         return recommendations
-    
