@@ -1,19 +1,22 @@
-# Receipt Spending Tracker
+# Receipt Spending Classifier
 
-A web application for tracking and analyzing spending through receipts.
-
-## Setup and Installation
-
-Instructions coming soon...
-
-## Usage
-
-Instructions coming soon...
+A smart receipt processing system that classifies expenses and provides spending insights.
 
 ## Features
+- 📷 Receipt image processing with OCR
+- 🏷️ Automatic expense categorization
+- 💰 Spending analytics and visualization
+- 💡 Money-saving recommendations
 
-- Coming soon...
+## Quick Start
 
-## License
+### Prerequisites
+- Python 3.8+
+- Tesseract OCR
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Installation
+
+1. **Clone the repository**
+```bash
+git clone <your-repo-url>
+cd receipt-classifier
